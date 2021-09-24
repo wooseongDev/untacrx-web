@@ -1,0 +1,94 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "jest": true
+  },
+  "extends": ["airbnb-base", "eslint:recommended", "typescript", "prettier"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "simple-import-sort",
+    "prettier",
+    "@typescript-eslint",
+    "react",
+    "react-hooks",
+    "jsx-a11y",
+    "import"
+  ],
+  "rules": {
+    // prettier
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    // TypeScript
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/ban-ts-ignore": "off",
+    "@typescript-eslint/explicit-member-accessibility": "off",
+    "@typescript-eslint/no-object-literal-type-assertion": "off",
+    "@typescript-eslint/no-unused-vars": "warn",
+    "@typescript-eslint/no-shadow": "warn",
+    "@typescript-eslint/ban-types": "warn",
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    // js
+    "camelcase": "off",
+    "consistent-return": "off",
+    "class-methods-use-this": "off",
+    "no-useless-constructor": "off",
+    "no-empty-function": "off",
+    "no-return-await": "off",
+    "no-console": ["warn", { "allow": ["error", "warn"] }],
+    // v4 changes
+    "no-use-before-define": "off",
+    "no-shadow": "off",
+    // jsx-a11y
+    "jsx-a11y/click-events-have-key-events": "warn",
+    "jsx-a11y/no-noninteractive-element-interactions": "warn",
+    // React
+    "react/require-default-props": "off",
+    "react/jsx-filename-extension": [
+      "error",
+      { "extensions": [".jsx", ".tsx"] }
+    ],
+    "react/prop-types": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "react-hooks/rules-of-hooks": 2,
+    "react/jsx-props-no-spreading": "off",
+    "react/no-array-index-key": "warn",
+    "react/button-has-type": "warn",
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
+    // import
+    "import/no-extraneous-dependencies": [
+      "error",
+      { "devDependencies": ["/**/*.ts?(x)"] }
+    ],
+    "import/no-cycle": "warn",
+    "import/no-unresolved": "off",
+    "import/order": "off",
+    "import/prefer-default-export": "off",
+    "import/extensions": "off",
+    "import/no-named-as-default-member": 2,
+    "import/no-duplicates": 2,
+    "import/no-useless-path-segments": 2,
+    "import/no-anonymous-default-export": 0,
+    "import/named": 0,
+    // simple-import-sort
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  }
+}
