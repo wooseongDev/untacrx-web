@@ -1,9 +1,15 @@
 import { css } from '@emotion/react';
 
 const globalStyle = css`
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css');
+
   html {
     font-size: 16px;
     box-sizing: border-box;
+    font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont,
+      system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo',
+      'Noto Sans KR', 'Malgun Gothic', sans-serif;
+
     * {
       line-height: 1.2;
       box-sizing: inherit;
