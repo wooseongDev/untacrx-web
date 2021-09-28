@@ -1,6 +1,6 @@
 import { Route, Switch } from 'react-router-dom';
 
-import useChannelServiceEffect from './lib/ChannelService/useChannelServiceEffect';
+import useChannelServiceEffect from './hooks/useChannelServiceEffect';
 import { MainPage, MatchinPage } from './pages';
 
 function App() {

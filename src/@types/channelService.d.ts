@@ -5,277 +5,173 @@ declare module 'channelService' {
       ChannelIOInitialized: boolean | undefined;
     }
 
-    interface IChannelIOBase {
-      (...args: ChannelIOArgsType): void;
+    interface IChannelIO<T extends ChannelIOMethod = ChannelIOMethod> {
+      (...args: ChannelIOArgs<T>): void;
 
-      c: (args: ChannelIOArgsType) => void;
-      q: ChannelIOArgsType[];
+      c: (args: ChannelIOArgs<T>) => void;
+      q: ChannelIOArgs[];
     }
 
-    type ChannelIOArgs = {
-      boot: [
+    interface IChannelIOAPI {
+      boot: (
         option: IChannelIOBootOption,
-        callback?: ChannelIOCallback['boot'],
-      ];
-      openChat: [chatId?: string | number, message?: string];
-      track: [
+        callback?: (error: ChannelIOAPIError, user: ChannelIOAPIUser) => void,
+      ) => void;
+
+      shutdown: () => void;
+
+      showMessenger: () => void;
+
+      hideMessenger: () => void;
+
+      openChat: (chatId?: string | number, message?: string) => void;
+
+      track: (
         eventName: string,
-        eventProperty: { [key: string]: string | number },
-      ];
-      onShowMessenger: [callback: ChannelIOCallback['onShowMessenger']];
-      onHideMessenger: [callback: ChannelIOCallback['onHideMessenger']];
-      onBadgeChanged: [callback: ChannelIOCallback['onBadgeChanged']];
-      onChatCreated: [callback: ChannelIOCallback['onChatCreated']];
-      onProfileChanged: [callback: ChannelIOCallback['onProfileChanged']];
-      onUrlClicked: [callback: ChannelIOCallback['onUrlClicked']];
-      updateUser: [
-        option: IChannelIOUser,
-        callback?: ChannelIOCallback['updateUser'],
-      ];
-      addTags: [tags: string[], callback?: ChannelIOCallback['addTags']];
-      removeTags: [tags: string[], callback?: ChannelIOCallback['removeTags']];
-      setPage: [page: string];
-    };
+        eventProperty?: { [key: string]: string | number },
+      ) => void;
 
-    type ChannelIOCallback = {
-      boot: (error: ChannelIOErrorType, user: IChannelIOUser) => void;
-      onShowMessenger: () => void;
-      onHideMessenger: () => void;
-      onBadgeChanged: (unreadCount: number) => void;
-      onChatCreated: () => void;
-      onProfileChanged: (profile: IChannelIOProfileType) => void;
-      onUrlClicked: (url: string) => void;
-      updateUser: (error: ChannelIOErrorType, user: IChannelIOUser) => void;
-      addTags: (error: ChannelIOErrorType, user: IChannelIOUser) => void;
-      removeTags: (error: ChannelIOErrorType, user: IChannelIOUser) => void;
-    };
+      onShowMessenger: (callback: () => void) => void;
 
-    interface IChannelIO {
-      /**
-       * Boot up channel plugin(button) to make it ready to use.
-       */
-      (method: GetMethodType<'boot'>, ...args: ChannelIOArgs['boot']): void;
+      onHideMessenger: (callback: () => void) => void;
 
-      /**
-       * Shutdown channel plugin.
-       */
-      (method: GetMethodType<'shutdown'>): void;
+      onBadgeChanged: (callback: (unreadCount: number) => void) => void;
 
-      /**
-       * Show plugin messenger.
-       */
-      (method: GetMethodType<'showMessenger'>): void;
+      onChatCreated: (callback: () => void) => void;
 
-      /**
-       * Hide plugin messenger.
-       */
-      (method: GetMethodType<'hideMessenger'>): void;
+      onProfileChanged: (
+        callback: (profile: IChannelIOUserProfile) => void,
+      ) => void;
 
-      /**
-       * Open a chat with the given chat id and message.
-       * If the given chat id exists, appropriate chat will be opened.
-       * If not, lounge will be opened. In this case, the message will be ignored.
-       * If chat id is empty and message is given, new chat will be opened and the given message will be put in the input box.
-       * In this case, if the support bot is enable, support bot will run.
-       * If chat id and message is both empty, new chat will be opened.
-       */
-      (
-        method: GetMethodType<'openChat'>,
-        ...args: ChannelIOArgs['openChat']
-      ): void;
+      onUrlClicked: (callback: (url: string) => void) => void;
 
-      /**
-       * Track an event.
-       */
-      (method: GetMethodType<'track'>, ...args: ChannelIOArgs['track']): void;
+      clearCallbacks: () => void;
 
-      /**
-       * Register a callback function when the chat list is shown.
-       * @NOTE `onShowMessenger` API won't work in all mobile environments.
-       */
-      (
-        method: GetMethodType<'onShowMessenger'>,
-        ...args: ChannelIOArgs['onShowMessenger']
-      ): void;
+      updateUser: (userData: IChannelIOUserUpdate) => void;
 
-      /**
-       * Register a callback function when the chat list is hidden.
-       * @NOTE `onHideMessenger` API won't work in all mobile environments.
-       */
-      (
-        method: GetMethodType<'onHideMessenger'>,
-        ...args: ChannelIOArgs['onHideMessenger']
-      ): void;
+      addTags: (
+        tags: string[],
+        callback?: (error: ChannelIOAPIError, user: ChannelIOAPIUser) => void,
+      ) => void;
 
-      /**
-       * Register a callback when unreadCount is changed.
-       */
-      (
-        method: GetMethodType<'onBadgeChanged'>,
-        ...args: ChannelIOArgs['onBadgeChanged']
-      ): void;
+      removeTags: (
+        tags: string[],
+        callback?: (error: ChannelIOAPIError, user: ChannelIOAPIUser) => void,
+      ) => void;
 
-      /**
-       * Register a callback when a user success to create a chat.
-       * @NOTE `onChatCreated` API won't work in all mobile environments.
-       */
-      (
-        method: GetMethodType<'onChatCreated'>,
-        ...args: ChannelIOArgs['onChatCreated']
-      ): void;
+      setPage: (page: string) => void;
 
-      /**
-       * Register a callback when a user success to change their profile in the settings page and chats.
-       * profile is an object of the user's profile.
-       * @NOTE `onProfileChanged` API won't work in all mobile environments.
-       */
-      (
-        method: GetMethodType<'onProfileChanged'>,
-        ...args: ChannelIOArgs['onProfileChanged']
-      ): void;
+      resetPage: () => void;
 
-      /**
-       * Register a callback when a user clicks redirect images or buttons.
-       * We pass the redirect url to a function.
-       */
-      (
-        method: GetMethodType<'onUrlClicked'>,
-        ...args: ChannelIOArgs['onUrlClicked']
-      ): void;
+      showChannelButton: () => void;
 
-      /**
-       * Clear all callbacks registered.
-       */
-      (method: GetMethodType<'clearCallbacks'>): void;
-
-      /**
-       * Update user information.
-       */
-      (
-        method: GetMethodType<'updateUser'>,
-        ...args: ChannelIOArgs['updateUser']
-      ): void;
-
-      /**
-       * Add tags.
-       */
-      (
-        method: GetMethodType<'addTags'>,
-        ...args: ChannelIOArgs['addTags']
-      ): void;
-
-      /**
-       * Remove tags.
-       */
-      (
-        method: GetMethodType<'removeTags'>,
-        ...args: ChannelIOArgs['removeTags']
-      ): void;
-
-      /**
-       * Set page to be used instead of [canonical url](https://developers.channel.io/docs/what-is-canonical-url).
-       * setPage with null or undefined is different from resetPage. (that will send page data with null)
-       */
-      (
-        method: GetMethodType<'setPage'>,
-        ...args: ChannelIOArgs['setPage']
-      ): void;
-
-      /**
-       * Reset page data customized by developer.
-       * If you call resetPage, page data will fill with [canonical url](https://developers.channel.io/docs/what-is-canonical-url).
-       */
-      (method: GetMethodType<'resetPage'>): void;
-
-      /**
-       * Show channel button.
-       */
-      (method: GetMethodType<'showChannelButton'>): void;
-
-      /**
-       * Hide channel button.
-       */
-      (method: GetMethodType<'hideChannelButton'>): void;
+      hideChannelButton: () => void;
     }
   }
 
-  type ChannelIOErrorType = any;
+  type ChannelIOAPIError = any;
 
-  type ChannelIOArgsType = [method: ChannelIOMethodType, ...args: any[]];
+  type ChannelIOAPIUser = any;
 
-  type GetMethodType<T extends ChannelIOMethodType> = T;
+  type ChannelIOLanguage = 'en' | 'ko' | 'ja';
 
-  type ChannelIOLanguageType = 'en' | 'ko' | 'ja';
+  type ChannelIOMethod = keyof IChannelIOAPI;
 
-  type ChannelIOMethodType =
-    | 'boot'
-    | 'shutdown'
-    | 'showMessenger'
-    | 'hideMessenger'
-    | 'openChat'
-    | 'track'
-    | 'onShowMessenger'
-    | 'onHideMessenger'
-    | 'onBadgeChanged'
-    | 'onChatCreated'
-    | 'onProfileChanged'
-    | 'onUrlClicked'
-    | 'clearCallbacks'
-    | 'updateUser'
-    | 'addTags'
-    | 'removeTags'
-    | 'setPage'
-    | 'resetPage'
-    | 'showChannelButton'
-    | 'hideChannelButton';
-
-  interface IChannelIOProfileType {
-    name?: string;
-    mobileNumber?: string;
-    email?: string;
-    avatarUrl?: string;
-    [key: string]: string;
-  }
+  type ChannelIOArgs<T extends IChannelIOAPI> = [
+    T,
+    ...Parameters<IChannelIOAPI[T]>
+  ];
 
   interface IChannelIOUser {
+    /**
+     * A user id used inside channel.
+     */
     id?: string;
-    channelId?: string;
-    memberId?: string;
-    veilId?: string;
+
+    /**
+     * A user name.
+     */
     name?: string;
-    profile?: IChannelIOProfileType;
-    tags?: string[];
-    alert: number;
-    unread: number;
-    blocked: boolean;
-    unsubscribed: boolean;
-    hasChat?: boolean;
-    hasPushToken?: boolean;
-    language: ChannelIOLanguageType;
-    country: string;
-    city: string;
-    latitude: number;
-    longitude: number;
-    web: {
-      device: string;
-      os: string;
-      osName: string;
-      browser: string;
-      browserName: string;
-      sessionsCount: number;
-      lastSeenAt: number;
-    };
-    sessionsCount: number;
-    lastSeenAt: number;
-    createdAt: number;
-    updatedAt: number;
-    version: number;
-    managedKey?: number;
-    member?: boolean;
-    email?: string;
-    avatarUrl: string;
+
+    /**
+     * Member (user) identification id used by your company.
+     */
+    memberId?: string;
+
+    /**
+     * User's mobile number.
+     */
     mobileNumber?: string;
-    systemLanguage: string;
+
+    /**
+     * An object contains key/value information.
+     */
+    profile?: IChannelIOUserProfile;
+  }
+
+  interface IChannelIOUserUpdate {
+    /**
+     * Set user's language.
+     * When language is 'ko' or 'ja', interface is change to these languages.
+     * Else case, interface language is set to english.
+     * When set invalid language, user's language field is set to null.
+     */
+    language?: ChannelIOLanguage;
+
+    /**
+     * Tags to overwrite.
+     * Max 10 tags are allowed.
+     * Set `null` to reset.
+     * Empty list is not allowed.
+     */
+    tags?: string[];
+
+    /**
+     * Profile map to overwrite.
+     * Set `null` to reset.
+     * Set `null` for profile value to reset profile value.
+     * Empty map is not allowed.
+     * Always lower case.
+     */
+    profile?: IChannelIOUserProfile;
+
+    /**
+     * Map of profile to be added if there is no each profile values.
+     */
+    profileOnce?: IChannelIOUserProfile;
+
+    /**
+     * Terminates the user's marketing subscription.
+     * If the existing value is true, the value of true is maintained even if you change it to the value of false.
+     */
+    unsubscribed?: boolean;
+  }
+
+  interface IChannelIOUserProfile {
+    /**
+     * A user name.
+     */
+    name?: string;
+
+    /**
+     * A user's mobile number.
+     */
+    mobileNumber?: string;
+
+    /**
+     * A user's email.
+     */
+    email?: string;
+
+    /**
+     * A user's avatar url.
+     */
+    avatarUrl?: string;
+
+    /**
+     * Custom value
+     */
+    [key: string]: string;
   }
 
   interface IChannelIOBootOption {
@@ -309,7 +205,7 @@ declare module 'channelService' {
      * Set default language. Only (en, ko, ja) available.
      * It does not change for users who have already been created.
      */
-    language?: ChannelIOLanguageType;
+    language?: ChannelIOLanguage;
 
     /**
      * Whether to send default events (usually PageView).
@@ -327,13 +223,13 @@ declare module 'channelService' {
      * Profile object contains user information.
      * If this property is present, it will be used when boot is get called.
      */
-    profile?: IChannelIOProfileType;
+    profile?: IChannelIOUserProfile;
 
     /**
      * Set chat ux.
      * Only (newTab, iframe) available.
      * Default value is `newTab`.
-     * Do not recommend use `iframe` option.
+     * @note Do not recommend use `iframe` option.
      */
     mobileMessengerMode?: 'newTab' | 'iframe';
 
