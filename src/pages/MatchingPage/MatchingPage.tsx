@@ -1,9 +1,12 @@
+import { css } from '@emotion/react';
 import { useEffect } from 'react';
 
 import ChannelService from '../../lib/ChannelService';
 
+const issues = ['불면', '탈모', '다이어트', '피부미용', '기타'];
+
 const data = {
-  issue: '불면',
+  issue: issues[Math.floor(Math.random() * 5)],
   question1: {
     question: '카페인은 하루에 몇잔드세요?',
     answer: '2 잔',
@@ -19,11 +22,7 @@ const data = {
 };
 
 function MatchingPage() {
-  useEffect(() => {
-    ChannelService.showMessenger();
-  }, []);
-
-  const onClickUpdate = () => {
+  const updateUser = () => {
     ChannelService.updateUser({
       tags: [data.issue],
       profile: {
@@ -43,19 +42,19 @@ function MatchingPage() {
     });
   };
 
-  return (
-    <div>
-      <h3>곧 채널톡이 열립니다.</h3>
+  useEffect(() => {
+    updateUser();
+    // ChannelService.showMessenger();
+    ChannelService.openChat(undefined, '');
+  }, []);
 
-      <button type="button" onClick={ChannelService.showMessenger}>
-        open channel
-      </button>
-
-      <button type="button" onClick={onClickUpdate}>
-        update user
-      </button>
-    </div>
-  );
+  return <div css={backStyle} />;
 }
+
+const backStyle = css`
+  width: 100%;
+  height: 100%;
+  background-color: #3082b5;
+`;
 
 export default MatchingPage;

@@ -1,14 +1,13 @@
 import { Route, Switch } from 'react-router-dom';
 
 import { useChannelServiceEffect } from './hooks';
-import { MainPage, MatchinPage } from './pages';
+import { MatchinPage } from './pages';
 
 function App() {
   useChannelServiceEffect();
 
   return (
     <Switch>
-      <Route exact path="/" component={MainPage} />
       <Route exact path="/match" component={MatchinPage} />
     </Switch>
   );
