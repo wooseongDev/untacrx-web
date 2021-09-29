@@ -69,10 +69,6 @@ declare module 'channelService' {
     }
   }
 
-  type ChannelIOAPIError = any;
-
-  type ChannelIOAPIUser = any;
-
   type ChannelIOLanguage = 'en' | 'ko' | 'ja';
 
   type ChannelIOMethod = keyof IChannelIOAPI;
@@ -81,6 +77,41 @@ declare module 'channelService' {
     T,
     ...Parameters<IChannelIOAPI[T]>
   ];
+
+  type ChannelIOAPIError = any;
+
+  type ChannelIOAPIUser = {
+    id: string;
+    channelId: string;
+    memberId: string;
+    veilId: string;
+    name: string;
+    alert: number;
+    unread: number;
+    blocked: boolean;
+    unsubscribed: boolean;
+    language: ChannelIOLanguage;
+    country: string;
+    city: string;
+    latitude: number;
+    longitude: number;
+    web: {
+      device: string;
+      os: string;
+      osName: string;
+      browser: string;
+      browserName: string;
+      sessionsCount: number;
+      lastSeenAt: number;
+    };
+    sessionsCount: number;
+    lastSeenAt: number;
+    createdAt: number;
+    updatedAt: number;
+    version: number;
+    avatarUrl: string;
+    systemLanguage: string;
+  };
 
   interface IChannelIOUser {
     /**
@@ -171,7 +202,7 @@ declare module 'channelService' {
     /**
      * Custom value
      */
-    [key: string]: string;
+    [key: string]: boolean | string | number | (string | number)[];
   }
 
   interface IChannelIOBootOption {
