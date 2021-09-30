@@ -24,12 +24,12 @@ const data = {
 function MatchingPage() {
   const updateUser = () => {
     ChannelService.updateUser({
-      tags: [data.issue],
       profile: {
         name: data.name,
         mobileNumber: data.phoneNumber,
         age: data.age,
         gender: data.gender,
+        category: data.issue,
         description: JSON.stringify(
           {
             [data.question1.question]: data.question1.answer,
