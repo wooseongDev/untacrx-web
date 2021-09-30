@@ -9,6 +9,7 @@ const globalStyle = css`
     font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont,
       system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo',
       'Noto Sans KR', 'Malgun Gothic', sans-serif;
+    color: #24243f;
 
     * {
       line-height: 1.2;
@@ -37,6 +38,9 @@ const globalStyle = css`
   }
 
   button {
+    background: transparent;
+    border: none;
+    outline: none;
     cursor: pointer;
   }
 
