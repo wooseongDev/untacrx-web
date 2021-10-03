@@ -63,7 +63,13 @@ function ProductPage() {
 
       <HorizontalScroll>
         {productList.map((item) => (
-          <Link to={`/product/${item.id}`} key={item.id}>
+          <Link
+            key={item.id}
+            to={{
+              state: 'product',
+              pathname: `/product/${item.id}`,
+            }}
+          >
             <CardItem
               imgSrc={item.imageUrl}
               subtitle={item.company}
@@ -72,6 +78,11 @@ function ProductPage() {
             >
               <div css={style}>
                 <Icon name="heart" />
+
+                <div css={priceStyle}>
+                  <h4 className="discount">{`${item.discount * 100}% 할인`}</h4>
+                  <h4 className="price">{`${item.price.toLocaleString()}원`}</h4>
+                </div>
               </div>
             </CardItem>
           </Link>
@@ -118,6 +129,20 @@ const reasonStyle = css`
 
   &:not(:last-of-type) {
     margin-bottom: 0.5rem;
+  }
+`;
+
+const priceStyle = css`
+  display: flex;
+  align-items: center;
+
+  .discount {
+    margin-right: 0.5rem;
+    color: #f51e6b;
+  }
+
+  .price {
+    color: #686777;
   }
 `;
 

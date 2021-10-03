@@ -6,3 +6,4 @@ export { default as HorizontalScroll } from './HorizontalScroll';
 export { default as Icon } from './Icon';
 export { default as IconButton } from './IconButton';
 export { default as IconLink } from './IconLink';
+export { default as TopNavigation } from './TopNavigation';

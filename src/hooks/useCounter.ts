@@ -8,6 +8,8 @@ export default function useCount(initialValue = 0) {
   };
 
   const decrease = () => {
+    if (count === 0) return;
+
     setCount((prev) => prev - 1);
   };
 

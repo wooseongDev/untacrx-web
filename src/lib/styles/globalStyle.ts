@@ -70,6 +70,8 @@ const globalStyle = css`
   }
 
   button {
+    padding: 0;
+    margin: 0;
     background: transparent;
     border: none;
     outline: none;

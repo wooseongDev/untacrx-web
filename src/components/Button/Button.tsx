@@ -23,6 +23,10 @@ const buttonStyle = css`
   font-size: 1rem;
   font-weight: 600;
   border-radius: 3rem;
+
+  &:disabled {
+    background-color: #eceff6;
+  }
 `;
 
 export default Button;
