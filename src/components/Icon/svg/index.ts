@@ -1,4 +1,5 @@
 export { ReactComponent as bag } from './bag.svg';
+export { ReactComponent as check } from './check.svg';
 export { ReactComponent as droplet } from './droplet.svg';
 export { ReactComponent as heart } from './heart.svg';
 export { ReactComponent as message } from './message.svg';

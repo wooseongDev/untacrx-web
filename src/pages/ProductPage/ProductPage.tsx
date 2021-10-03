@@ -1,6 +1,11 @@
 import { css } from '@emotion/react';
 
-import { BottomNavigation, CardItem, Icon } from '../../components';
+import {
+  BottomNavigation,
+  CardItem,
+  HorizontalScroll,
+  Icon,
+} from '../../components';
 
 const data = {
   pharmacist: 'ABC',
@@ -22,22 +27,23 @@ const data = {
       discount: 0.2,
       liked: false,
     },
-    // {
-    //   id: 1,
-    //   company: '휴롬사이언스',
-    //   productName: '리얼슬립',
-    //   description:
-    //     '자연유래 100% 제주 감태추출물을 주원료로 한 국내최초 식약처 개별인정 감태추출물!',
-    //   imageUrl: 'https://source.unsplash.com/random/240x200',
-    //   price: 29800,
-    //   discount: 0.3,
-    //   liked: false,
-    // },
+    {
+      id: 1,
+      company: '휴롬사이언스',
+      productName: '리얼슬립',
+      description:
+        '자연유래 100% 제주 감태추출물을 주원료로 한 국내최초 식약처 개별인정 감태추출물!',
+      imageUrl: 'https://source.unsplash.com/random/240x200',
+      price: 29800,
+      discount: 0.3,
+      liked: false,
+    },
   ],
 };
 
 function ProductPage() {
   const { pharmacist, user, reasons, productList } = data;
+
   return (
     <div>
       <h2>{pharmacist} 약사님의 추천</h2>
@@ -48,9 +54,10 @@ function ProductPage() {
         ))}
       </div>
 
-      <div>
+      <HorizontalScroll>
         {productList.map((item) => (
           <CardItem
+            className="item"
             key={item.id}
             imgSrc={item.imageUrl}
             subtitle={item.company}
@@ -62,7 +69,8 @@ function ProductPage() {
             </div>
           </CardItem>
         ))}
-      </div>
+      </HorizontalScroll>
+
       <BottomNavigation />
     </div>
   );
@@ -75,6 +83,17 @@ const style = css`
   color: #888e9a;
   padding: 1.25rem;
   padding-top: 0;
+`;
+
+const slideStyle = css`
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 1.5rem;
+
+  .item:not(:last-of-type) {
+    margin-right: 1.5rem;
+  }
 `;
 
 export default ProductPage;

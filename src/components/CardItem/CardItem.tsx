@@ -7,6 +7,7 @@ interface CardItemProps {
   title: string;
   description: string;
   children?: React.ReactNode;
+  className?: string;
 }
 
 function CardItem({
@@ -15,9 +16,10 @@ function CardItem({
   title,
   description,
   children,
+  className,
 }: CardItemProps) {
   return (
-    <div css={wrapperStyle}>
+    <div css={wrapperStyle} className={className}>
       <div css={imageStyle}>
         <img src={imgSrc} alt={title} />
       </div>
