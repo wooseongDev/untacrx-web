@@ -2,11 +2,12 @@ import { css } from '@emotion/react';
 import { useEffect } from 'react';
 
 import ChannelService from '../../lib/ChannelService';
+import { randomResult } from '../../lib/randomResult';
 
 const issues = ['불면', '탈모', '다이어트', '피부미용', '기타'];
 
 const data = {
-  issue: issues[Math.floor(Math.random() * 5)],
+  issue: randomResult(issues),
   question1: {
     question: '카페인은 하루에 몇잔드세요?',
     answer: '2 잔',

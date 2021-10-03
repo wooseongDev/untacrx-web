@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { Link } from 'react-router-dom';
 
 import {
   BottomNavigation,
@@ -6,10 +7,11 @@ import {
   HorizontalScroll,
   Icon,
 } from '../../components';
+import { randomResult } from '../../lib/randomResult';
 
 const data = {
-  pharmacist: 'ABC',
-  user: 'DEF',
+  pharmacist: randomResult(['ABC', 'DEF', 'GHI']),
+  user: randomResult(['abc', 'def', 'ghi']),
   reasons: [
     '스트레스로 숙면을 취하기어렵다',
     '자고 일어나도 개운하다는 느낌을 받지 못한다',
@@ -45,29 +47,34 @@ function ProductPage() {
   const { pharmacist, user, reasons, productList } = data;
 
   return (
-    <div>
-      <h2>{pharmacist} 약사님의 추천</h2>
-      <h3>{user} 고객님을 위한 약사님의 추천이유</h3>
-      <div>
-        {reasons.map((reason) => (
-          <p key={reason[0]}>{reason}</p>
-        ))}
+    <div css={{ paddingBottom: '5.5rem' }}>
+      <div css={contentStyle}>
+        <h1>{pharmacist} 약사님의 추천</h1>
+        <h4>{user} 고객님을 위한 약사님의 추천이유</h4>
+        <div>
+          {reasons.map((reason) => (
+            <div css={reasonStyle} key={`${reason[0]}${reason.length}`}>
+              <Icon name="check" className="check" />
+              <p key={reason[0]}>{reason}</p>
+            </div>
+          ))}
+        </div>
       </div>
 
       <HorizontalScroll>
         {productList.map((item) => (
-          <CardItem
-            className="item"
-            key={item.id}
-            imgSrc={item.imageUrl}
-            subtitle={item.company}
-            title={item.productName}
-            description={item.description}
-          >
-            <div css={style}>
-              <Icon name="heart" />
-            </div>
-          </CardItem>
+          <Link to={`/product/${item.id}`} key={item.id}>
+            <CardItem
+              imgSrc={item.imageUrl}
+              subtitle={item.company}
+              title={item.productName}
+              description={item.description}
+            >
+              <div css={style}>
+                <Icon name="heart" />
+              </div>
+            </CardItem>
+          </Link>
         ))}
       </HorizontalScroll>
 
@@ -85,14 +92,31 @@ const style = css`
   padding-top: 0;
 `;
 
-const slideStyle = css`
-  display: flex;
-  align-items: center;
-  position: relative;
-  padding: 1.5rem;
+const contentStyle = css`
+  padding: 2rem 1.5rem 0;
 
-  .item:not(:last-of-type) {
-    margin-right: 1.5rem;
+  h1 {
+    margin-bottom: 1.25rem;
+  }
+
+  h4 {
+    margin-bottom: 0.75rem;
+  }
+`;
+
+const reasonStyle = css`
+  display: flex;
+  font-size: 0.875rem;
+  color: #aeb2bf;
+  font-weight: 600;
+
+  .check {
+    color: #554af0;
+    margin-right: 0.25rem;
+  }
+
+  &:not(:last-of-type) {
+    margin-bottom: 0.5rem;
   }
 `;
 

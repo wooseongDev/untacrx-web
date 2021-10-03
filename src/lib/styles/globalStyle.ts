@@ -37,6 +37,35 @@ const globalStyle = css`
     padding: 0;
   }
 
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+  }
+
+  h4 {
+    font-size: 1rem;
+  }
+
+  h5 {
+    font-size: 0.875rem;
+  }
+
+  h6 {
+    font-size: 0.75rem;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
   button {
     background: transparent;
     border: none;

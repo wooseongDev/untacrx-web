@@ -27,6 +27,8 @@ const navStyle = css`
   justify-content: space-between;
   padding: 1rem 2.25rem;
   width: 100%;
+  background-color: #ffffff;
+  z-index: 10;
 `;
 
 export default BottomNavigation;

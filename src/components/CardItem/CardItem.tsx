@@ -36,8 +36,10 @@ function CardItem({
 }
 
 const wrapperStyle = css`
+  position: relative;
+  width: 70vw;
   max-width: 15rem;
-  box-shadow: rgba(196, 201, 211, 0.6) 0px 48px 100px 0px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border-radius: 1.5rem;
   overflow: hidden;
 `;
@@ -45,7 +47,7 @@ const wrapperStyle = css`
 const imageStyle = css`
   width: 100%;
   max-height: 12.5rem;
-  min-height: 4rem;
+  min-height: 10rem;
   overflow: hidden;
 `;
 

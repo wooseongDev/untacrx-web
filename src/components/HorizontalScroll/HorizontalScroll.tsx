@@ -6,21 +6,41 @@ interface HorizontalScrollProps {
 }
 
 function HorizontalScroll({ children }: HorizontalScrollProps) {
-  const items = React.Children.map(children, (child) => {
-    const { props } = child;
-    console.log(child);
-    return { ...child, props: { ...props, className: 'item' } };
-  });
+  const items = React.Children.map(children, (child) => ({
+    ...child,
+    props: { ...child.props, className: 'item' },
+  }));
+
+  const calcWidth = () => {
+    const { length } = items;
+    const width = 240 * length;
+    const gap = 24 * (length + 1);
+
+    return width + gap;
+  };
 
   return (
     <div css={wrapperStyle}>
-      <div css={horizontalStyle}>{items}</div>
+      <div css={horizontalStyle} style={{ width: calcWidth() }}>
+        {items}
+      </div>
     </div>
   );
 }
 
 const wrapperStyle = css`
   min-width: 100%;
+  overflow: auto;
+  flex: 1;
+  z-index: 5;
+
+  /* % hide scrollbar % */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const horizontalStyle = css`
