@@ -1,11 +1,14 @@
 import { css } from '@emotion/react';
+import { Link } from 'react-router-dom';
 
 import Logo from '../../assets/images/logo.png';
 
 function MainPage() {
   return (
     <div css={wrapperStyle}>
-      <img src={Logo} alt="untacrx" />
+      <Link to="/product">
+        <img src={Logo} alt="untacrx" />
+      </Link>
 
       <h3>안녕하세요.</h3>
       <h3>비대면 복약상담서비스</h3>

@@ -106,6 +106,7 @@ const contentStyle = css`
 
 const reasonStyle = css`
   display: flex;
+  align-items: center;
   font-size: 0.875rem;
   color: #aeb2bf;
   font-weight: 600;
