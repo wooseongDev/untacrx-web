@@ -79,13 +79,13 @@ const pageStyle = css`
   flex-direction: column;
   padding-top: 2rem;
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   background-color: #f5f7fa;
 `;
 
 const imageStyle = css`
   flex: 1;
-  width: 100vw;
+  width: 100%;
   height: 100vw;
 
   img {
