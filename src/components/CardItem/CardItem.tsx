@@ -45,9 +45,12 @@ const wrapperStyle = css`
 `;
 
 const imageStyle = css`
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
   width: 100%;
-  max-height: 12.5rem;
-  min-height: 10rem;
+  height: 12.5rem;
+  background-color: #e5e5e5;
   overflow: hidden;
 `;
 

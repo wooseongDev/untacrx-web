@@ -1,6 +1,8 @@
 import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
 
+import product_0 from '../../assets/images/product_0.png';
+import product_1 from '../../assets/images/product_1.png';
 import {
   BottomNavigation,
   CardItem,
@@ -9,7 +11,7 @@ import {
 } from '../../components';
 import { randomResult } from '../../lib/randomResult';
 
-const data = {
+export const data = {
   pharmacist: randomResult(['ABC', 'DEF', 'GHI']),
   user: randomResult(['abc', 'def', 'ghi']),
   reasons: [
@@ -24,7 +26,7 @@ const data = {
       productName: '스트레스 나이트케어',
       description:
         '매일반복되는 스트레스로 인한 풀리지 않는 긴장 부드러운 이완으로 새로운 시작!',
-      imageUrl: 'https://source.unsplash.com/random/240x200',
+      imageUrl: product_0,
       price: 59800,
       discount: 0.2,
       liked: false,
@@ -35,7 +37,7 @@ const data = {
       productName: '리얼슬립',
       description:
         '자연유래 100% 제주 감태추출물을 주원료로 한 국내최초 식약처 개별인정 감태추출물!',
-      imageUrl: 'https://source.unsplash.com/random/240x200',
+      imageUrl: product_1,
       price: 29800,
       discount: 0.3,
       liked: false,
