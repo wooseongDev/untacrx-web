@@ -5,6 +5,7 @@ import {
   ForbiddenPage,
   MainPage,
   MatchingPage,
+  PaymentPage,
   ProductItemPage,
   ProductPage,
 } from './pages';
@@ -21,6 +22,8 @@ function App() {
       <Route exact path="/product" component={ProductPage} />
 
       <Route exact path="/product/:id" component={ProductItemPage} />
+
+      <Route exact path="/payment" component={PaymentPage} />
 
       <Route component={ForbiddenPage} />
     </Switch>

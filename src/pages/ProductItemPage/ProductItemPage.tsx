@@ -1,8 +1,9 @@
 import { css } from '@emotion/react';
-import { useParams } from 'react-router-dom';
+import { useState } from 'react';
+import { Redirect, useParams } from 'react-router-dom';
 
 import { Button, Counter, IconLink, TopNavigation } from '../../components';
-import useCount from '../../hooks/useCounter';
+import { useCounter } from '../../hooks';
 
 const productList = [
   {
@@ -30,11 +31,17 @@ const productList = [
 ];
 
 function ProductItemPage() {
-  const [count, increase, decrease] = useCount(1);
+  const [count, increase, decrease] = useCounter(1);
+  const [isPayment, setIsPayment] = useState(false);
+
   const { id } = useParams<{ id: string }>();
 
   const { company, productName, price, discount } =
     productList.find((value) => value.id === Number(id)) || {};
+
+  const onClickPayment = () => {
+    setIsPayment(true);
+  };
 
   return (
     <div css={pageStyle}>
@@ -68,7 +75,10 @@ function ProductItemPage() {
           <IconLink iconName="heart" buttonType="gray" label="선물하기" />
         </div>
 
-        <Button disabled={count === 0}>바로구매</Button>
+        {isPayment && <Redirect to="/payment" />}
+        <Button onClick={onClickPayment} disabled={count === 0}>
+          바로구매
+        </Button>
       </div>
     </div>
   );
